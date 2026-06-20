@@ -267,12 +267,18 @@ function App() {
     )
   }
 
+  const changePage = (page: number) => {
+    const nextPage = Math.min(Math.max(page, 1), totalPages)
+    setCurrentPage(nextPage)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <>
       <Header onRestore={restoreBuild} />
       <main className={showDriveModal ? 'app-shell app-shell--dimmed' : 'app-shell'}>
         <section className="intro-panel">
-          <p className="eyebrow">Tandang Sora, Quezon City</p>
+          <p className="eyebrow">Philippines</p>
           <h2>Build your PC game drive online.</h2>
           <p>
             Choose your storage, pick your games, then send your order through
@@ -338,7 +344,7 @@ function App() {
                 <button
                   className="page-button"
                   disabled={safeCurrentPage === 1}
-                  onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                  onClick={() => changePage(safeCurrentPage - 1)}
                   type="button"
                 >
                   Prev
@@ -350,7 +356,7 @@ function App() {
                         safeCurrentPage === page ? 'is-active' : ''
                       }`}
                       key={page}
-                      onClick={() => setCurrentPage(page)}
+                      onClick={() => changePage(page)}
                       type="button"
                     >
                       {page}
@@ -360,9 +366,7 @@ function App() {
                 <button
                   className="page-button"
                   disabled={safeCurrentPage === totalPages}
-                  onClick={() =>
-                    setCurrentPage((page) => Math.min(totalPages, page + 1))
-                  }
+                  onClick={() => changePage(safeCurrentPage + 1)}
                   type="button"
                 >
                   Next

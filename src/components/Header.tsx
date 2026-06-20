@@ -6,14 +6,14 @@ export function Header({ onRestore }: HeaderProps) {
   return (
     <header className="site-header">
       <div className="brand">
-        <div className="brand-logo">PC</div>
-        <div>
-          <p className="brand-kicker">PC Games</p>
-          <h1>PC Games Tandang Sora</h1>
-        </div>
+        <img
+          alt="PC Games Services"
+          className="header-logo"
+          src="/images/pc-games-services-header-logo.png"
+        />
       </div>
       <button className="ghost-button" onClick={onRestore} type="button">
-        Restore Build
+        Restore & Build
       </button>
     </header>
   )
