@@ -32,7 +32,7 @@ export function Filters({
         <span>Search</span>
         <input
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search games…"
+          placeholder="Search games..."
           type="search"
           value={searchTerm}
         />

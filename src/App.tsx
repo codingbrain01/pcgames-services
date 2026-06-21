@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import './App.css'
 import { BuildSidebar } from './components/BuildSidebar'
 import { CheckoutModal } from './components/CheckoutModal'
@@ -13,7 +13,9 @@ import { games } from './data/games'
 import type { BuildSnapshot, Game, GameCategory, SortOption, SpecLevel } from './types'
 
 const storageKey = 'pcg-builder-snapshot'
+const themeStorageKey = 'pcg-builder-theme'
 const pageSize = 56
+type Theme = 'light' | 'dark'
 
 const categories: Array<GameCategory | 'All Games' | 'New Releases'> = [
   'All Games',
@@ -70,6 +72,15 @@ const getFittingGameIds = (gameIds: string[], driveId: string | null) => {
 }
 
 function App() {
+  const [theme, setTheme] = useState<Theme>(() => {
+    try {
+      return window.localStorage.getItem(themeStorageKey) === 'dark'
+        ? 'dark'
+        : 'light'
+    } catch {
+      return 'light'
+    }
+  })
   const [selectedDriveId, setSelectedDriveId] = useState<string | null>(() => {
     const saved = loadSnapshot()
     return drives.some((drive) => drive.id === saved.driveId) ? saved.driveId : null
@@ -111,6 +122,14 @@ function App() {
     [selectedGames],
   )
   const remainingGB = selectedDrive ? selectedDrive.usableGB - usedGB : 0
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'light' ? '#f4f1ea' : '#050505')
+    window.localStorage.setItem(themeStorageKey, theme)
+  }, [theme])
 
   useEffect(() => {
     const snapshot: BuildSnapshot = { driveId: selectedDriveId, selectedGameIds }
@@ -275,7 +294,13 @@ function App() {
 
   return (
     <>
-      <Header onRestore={restoreBuild} />
+      <Header
+        theme={theme}
+        onRestore={restoreBuild}
+        onThemeToggle={() =>
+          setTheme((current) => (current === 'light' ? 'dark' : 'light'))
+        }
+      />
       <main className={showDriveModal ? 'app-shell app-shell--dimmed' : 'app-shell'}>
         <section className="intro-panel">
           <p className="eyebrow">Philippines</p>

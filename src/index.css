@@ -2,8 +2,8 @@
   --font-body: "Inter", ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Rajdhani", "Inter", ui-sans-serif, system-ui, sans-serif;
-  color: #f5f7ff;
-  background: #05070d;
+  color: var(--mono-text, #161513);
+  background: var(--page-bg, #f4f1ea);
   font-family: var(--font-body);
   font-synthesis: none;
   line-height: 1.5;
@@ -20,10 +20,11 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(0, 229, 255, 0.14), transparent 28rem),
-    radial-gradient(circle at 82% 18%, rgba(255, 47, 126, 0.12), transparent 30rem),
-    linear-gradient(135deg, #05070d 0%, #0a0f1d 46%, #070811 100%);
+  background: var(
+    --page-background,
+    linear-gradient(135deg, #f7f4ef 0%, #ebe6dc 52%, #fdfbf7 100%)
+  );
+  color: var(--mono-text, #161513);
 }
 
 h1,

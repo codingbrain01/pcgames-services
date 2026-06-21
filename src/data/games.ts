@@ -8,27 +8,27 @@ const escapeSvgText = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 const cover = (seed: string, title: string, source?: string | null) => {
+  void seed
+
   if (source && /^https?:\/\//.test(source)) {
     return source
   }
 
-  const hue =
-    [...seed].reduce((total, char) => total + char.charCodeAt(0), 0) % 360
   const shortTitle = escapeSvgText(title.length > 34 ? `${title.slice(0, 31)}...` : title)
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="520" height="720" viewBox="0 0 520 720">
       <defs>
         <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0%" stop-color="hsl(${hue}, 95%, 18%)"/>
-          <stop offset="48%" stop-color="#090d18"/>
-          <stop offset="100%" stop-color="hsl(${(hue + 70) % 360}, 95%, 20%)"/>
+          <stop offset="0%" stop-color="#242424"/>
+          <stop offset="52%" stop-color="#090909"/>
+          <stop offset="100%" stop-color="#171717"/>
         </linearGradient>
       </defs>
       <rect width="520" height="720" fill="url(#bg)"/>
-      <rect x="28" y="28" width="464" height="664" rx="28" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="4"/>
-      <text x="260" y="250" text-anchor="middle" fill="#00e5ff" font-family="Arial, sans-serif" font-size="34" font-weight="700">PC GAMES</text>
+      <rect x="28" y="28" width="464" height="664" rx="28" fill="none" stroke="rgba(245,241,232,.26)" stroke-width="4"/>
+      <text x="260" y="250" text-anchor="middle" fill="#f5f1e8" font-family="Arial, sans-serif" font-size="34" font-weight="700">PC GAMES</text>
       <text x="260" y="356" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="42" font-weight="700">${shortTitle}</text>
-      <text x="260" y="438" text-anchor="middle" fill="#ffea00" font-family="Arial, sans-serif" font-size="24" font-weight="700">GAME DRIVE BUILDER</text>
+      <text x="260" y="438" text-anchor="middle" fill="#bdb6aa" font-family="Arial, sans-serif" font-size="24" font-weight="700">GAME DRIVE BUILDER</text>
     </svg>`
 
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`
